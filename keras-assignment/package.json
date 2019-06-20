@@ -1,0 +1,9 @@
+{
+  "name": "inception-v3",
+  "description": "",
+  "version": "0.1.0",
+  "dependencies": {},
+  "devDependencies": {
+    "serverless-python-requirements": "^4.2.4"
+  }
+}

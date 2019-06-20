@@ -1,0 +1,51 @@
+
+service: california-housing # NOTE: update this with your service name
+
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: dev
+  region: eu-central-1
+
+# you can add packaging information here
+package:
+#  include:
+#    - include-me.py
+#    - include-me-dir/**
+  exclude:
+    - node_modules/**
+    - .vscode/**
+    - __pycache__/**
+    - .ipynb_checkpoints/**
+    - (*).ipynb
+
+
+functions:
+  predict-price:
+    handler: handler.predict
+    memorySize: 512
+    timeout: 30
+    events:
+      - http:
+          path: get-price
+          method: get
+          request:
+            parameters:
+              queryStrings:
+                medInc: true
+                houseAge: true
+                aveRooms: true
+                aveBedrms: true
+                population: true
+                aveOccup: true
+                latitude: true
+                longitude: true
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    slim: true 

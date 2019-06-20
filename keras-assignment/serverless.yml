@@ -1,0 +1,67 @@
+service: inception-v3 # NOTE: update this with your service name
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: dev
+  region: eu-central-1
+
+# you can add statements to the Lambda function's IAM Role here
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:*"
+      Resource: "*"
+
+# you can define service wide environment variables here
+  environment:
+    MODEL_BUCKET_NAME: ml-models-3521
+    MODEL_FILE_NAME_KEY: inception_v3_weights_tf_dim_ordering_tf_kernels.h5
+    UPLOAD_BUCKET_NAME: image-uploads-3521
+
+# you can add packaging information here
+package:
+#  include:
+#    - include-me.py
+#    - include-me-dir/**
+  exclude:
+    - node_modules/**
+    - .vscode/**
+    - __pycache__/**
+    - .ipynb_checkpoints/**
+    - (*).ipynb
+    - tmp/**
+
+
+functions:
+  inception-v3-classify:
+    handler: handler.classify
+    memorySize: 2048
+    timeout: 30
+    events:
+      - http:
+          path: classify
+          method: get
+          request:
+            parameters:
+              querystrings:
+                imageKey: true
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    slim: true
+    zip: true
+    noDeploy: []
+    useDownloadCache: true
+  #  useStaticCache: true
+    slimPatterns:
+      - "**/tensorboard*"
+      - "**/markdown*"             
+      - "**/werkzeug*"             
+      - "**/grpc*"             
+      - "**/tensorflow/contrib*"
+      - "**/tensorflow/include*"
+
+plugins:
+  - serverless-python-requirements

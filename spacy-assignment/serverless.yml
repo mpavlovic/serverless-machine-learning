@@ -1,0 +1,40 @@
+
+service: parse-api # NOTE: update this with your service name
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: dev
+  region: eu-central-1
+
+# you can add packaging information here
+#package:
+#  include:
+#    - include-me.py
+#    - include-me-dir/**
+  exclude:
+    - node_modules/**
+    - .vscode/**
+    - __pycache__/**
+
+functions:
+  parse-text:
+    handler: handler.handle_request
+    memorySize: 1536
+    timeout: 30
+    events:
+      - http:
+          path: parse
+          method: post
+
+custom:
+  pythonRequirements:
+    dcokerizePip: true
+    slim: true
+    zip: true
+    noDeploy: []
+    useDownloadCache: true
+#    useStaticCache: true
+
+plugins:
+  - serverless-python-requirements

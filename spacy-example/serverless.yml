@@ -1,0 +1,42 @@
+
+service: ner-api # NOTE: update this with your service name
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: dev
+  region: eu-central-1
+
+# you can add packaging information here
+package:
+#  include:
+#    - include-me.py
+#    - include-me-dir/**
+  exclude:
+    - node_modules/**
+    - .vscode/**
+    - __pycache__/**
+    - .ipynb_checkpoints/**
+    - (*).ipynb
+
+functions:
+  recognize-named-entites:
+    handler: handler.handle_request
+    memorySize: 1536
+    timeout: 30
+    events:
+      - http:
+          path: ner
+          method: post
+
+custom:
+  pythonRequirements:
+    dcokerizePip: true
+    slim: true
+    zip: true
+    noDeploy: []
+    useDownloadCache: true
+    useStaticCache: true
+
+plugins:
+  - serverless-python-requirements
