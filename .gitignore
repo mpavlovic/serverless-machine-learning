@@ -1,3 +1,15 @@
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Zipped requirements from serverless-python-requirements
+.requirements.zip
+
+# Python
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
