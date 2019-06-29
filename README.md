@@ -1,5 +1,5 @@
 # serverless-machine-learning
-Examples of deploying machine learning models to AWS Lambda with Serverless framework and Python 3.
+Examples of deploying machine learning models to AWS Lambda with Serverless framework and Python 3. This repository is a code base for the online course available on the address above.
 
 ## Contents
 ### hello-world
