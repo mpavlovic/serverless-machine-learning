@@ -31,7 +31,7 @@ functions:
 
 custom:
   pythonRequirements:
-    dcokerizePip: true
+    dockerizePip: true
     slim: true
     zip: true
     noDeploy: []
